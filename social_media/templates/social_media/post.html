@@ -1,0 +1,10 @@
+{% extends 'social_media/base.html' %}
+
+{% block content %}
+  <h2>
+    <a href="{% url 'social_media:profile' %}">User Profile</a>
+  </h2>
+  <img src={{post.image.url}}/>
+  <h1>{{post.caption}}</h1>
+  <a href="{% url 'social_media:delete_post' post.pk %}">Delete Post</a>
+{% endblock content %}

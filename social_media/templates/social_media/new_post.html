@@ -1,0 +1,10 @@
+{% extends 'social_media/base.html' %}
+
+{% block content %}
+  <h2>Create a new post:</h2>
+  <form action="{% url 'social_media:new_post' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_div }}
+    <button name="submit">Create Post</button>
+  </form>
+{% endblock content %}
