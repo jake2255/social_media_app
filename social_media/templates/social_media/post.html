@@ -6,5 +6,6 @@
   </h2>
   <img src={{post.image.url}}/>
   <h1>{{post.caption}}</h1>
+  <h3>{{post.created_on}}</h3>
   <a href="{% url 'social_media:delete_post' post.pk %}">Delete Post</a>
 {% endblock content %}
