@@ -35,6 +35,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # My apps
     'social_media',
+    'accounts',
 
     # Default django apps
     'django.contrib.admin',
@@ -128,3 +129,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# My settings
+LOGIN_REDIRECT_URL = 'social_media:index'
+LOGOUT_REDIRECT_URL = 'social_media:index'
