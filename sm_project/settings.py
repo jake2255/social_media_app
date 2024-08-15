@@ -132,3 +132,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # My settings
 LOGIN_REDIRECT_URL = 'social_media:index'
 LOGOUT_REDIRECT_URL = 'social_media:index'
+LOGIN_URL = 'accounts:login'
