@@ -3,6 +3,7 @@ from social_media.models import Post
 from django.http import Http404
 from .forms import PostForm
 from django.contrib.auth.decorators import login_required
+from accounts.models import AccountUser
 
 def index(request):
     """Home page of site"""
@@ -12,8 +13,13 @@ def index(request):
 def profile(request):
     """Show user profile"""
     profile = Post.objects.filter(owner=request.user).order_by('created_on')
+    account_info = AccountUser.objects.filter(user=request.user).first()
+    context = {
+        'profile': profile,
+        'account_info': account_info,
+    }
     if profile is not None:
-        return render(request, 'social_media/profile.html', {'profile': profile})
+        return render(request, 'social_media/profile.html', context)
     else:
         raise Http404('User profile does not exist')
     
@@ -50,3 +56,8 @@ def post(request, post_id):
         return render(request, 'social_media/post.html', {'post': post})
     else:
         raise Http404('Post does not exist')
+    
+# def feed(request):
+#     """User feed"""
+#     feed = Post.objects.order_by('created_on')
+#     return render(request, 'social_media/profile.html', {'feed': feed})

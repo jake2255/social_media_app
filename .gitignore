@@ -2,3 +2,4 @@ sm_env/
 __pycache__/
 *.sqlite3
 social_media/images/
+accounts/images/
