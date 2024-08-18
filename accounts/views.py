@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from .forms import AccountUserForm
@@ -14,6 +14,7 @@ def register(request):
         form = UserCreationForm(data=request.POST)
         if form.is_valid():
             new_user = form.save()
+            AccountUser.objects.create(user=new_user)
             login(request, new_user)
             return redirect('social_media:index')
         
@@ -22,7 +23,8 @@ def register(request):
 
 def settings(request):
     """Edit account settings"""
-    account = AccountUser.objects.get(user=request.user)
+    #account = AccountUser.objects.get(user=request.user)
+    account = get_object_or_404(AccountUser, user=request.user)
     
     if request.method != 'POST':
         form = AccountUserForm(instance=account)
