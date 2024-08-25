@@ -1,8 +1,10 @@
 {% extends 'social_media/base.html' %}
 
 {% block content %}
-  <h2>
-    <a href="{% url 'social_media:profile' %}">User Profile</a>
-  </h2>
+  <h2><a href="{% url 'social_media:profile' username %}">User Profile</a></h2>
+  <form action="{% url 'social_media:search' %}" method="get">
+    <input name="search" type="text" placeholder="Search Profile...">
+    <button name="submit">Search</button>
+  </form>
   <h2>home page - still wip</h2>
 {% endblock content %}

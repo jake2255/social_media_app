@@ -1,9 +1,7 @@
 {% extends 'social_media/base.html' %}
 
 {% block content %}
-  <h2>
-    <a href="{% url 'social_media:profile' %}">User Profile</a>
-  </h2>
+  <h2><a href="{% url 'social_media:profile' username %}">User Profile</a></h2>
   <img src={{post.image.url}}/>
   <h1>{{post.caption}}</h1>
   <h3>{{post.created_on}}</h3>

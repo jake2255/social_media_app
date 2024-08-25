@@ -23,7 +23,6 @@ def register(request):
 
 def settings(request):
     """Edit account settings"""
-    #account = AccountUser.objects.get(user=request.user)
     account = get_object_or_404(AccountUser, user=request.user)
     
     if request.method != 'POST':
@@ -32,6 +31,6 @@ def settings(request):
         form = AccountUserForm(request.POST, request.FILES, instance=account)
         if form.is_valid():
             form.save()
-            return redirect('social_media:profile')
+            return redirect('social_media:profile', username=request.user.username)
         
     return render(request, 'registration/settings.html', {'form': form})

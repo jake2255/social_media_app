@@ -1,0 +1,14 @@
+{% extends 'social_media/base.html' %}
+
+{% block content %}
+  <h2>Search Results for "{{ query }}"</h2>
+  {% if results %}
+    <ul>
+      {% for user in results %}
+        <li><a href="{% url 'social_media:profile' user.user.username %}">{{ user.user.username }}</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No profiles found matching "{{ query }}"</p>
+  {% endif %}
+{% endblock content %}

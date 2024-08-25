@@ -2,18 +2,18 @@
 
 {% block content %}
   <h2>
-    <a href="{% url 'social_media:new_post' %}">New Post</a>
-    <a href="{% url 'accounts:settings' %}">Account Settings</a>
+    {% if request.user == user_name %}
+      <a href="{% url 'social_media:new_post' %}">New Post</a>
+      <a href="{% url 'accounts:settings' %}">Account Settings</a>
+    {% endif %}
   </h2>
-  <img src={{account_info.profile_pic.url}}/>
+  <img src="{{ info.profile_pic.url }}"/>
   <h2>Bio</h2>
-  <p>
-    {{account_info.bio}}
-  </p>
+  <p>{{ info.bio }}</p>
   <ul>
-    {% for post in profile %}
+    {% for post in posts %}
       <a href="{% url 'social_media:post' post.pk %}">
-        <img src={{post.image.url}}/>
+        <img src="{{ post.image.url }}"/>
       </a>
     {% empty %}
       <p>Empty Profile</p>
