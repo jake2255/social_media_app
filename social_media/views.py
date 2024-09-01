@@ -14,6 +14,7 @@ def index(request):
         username = None
     return render(request, 'social_media/index.html', {'username': username})
 
+@login_required
 def profile(request, username):
     """Show user profile"""
     user_name = get_object_or_404(User, username=username)
@@ -51,11 +52,11 @@ def delete_post(request, post_id):
         post.delete()
     return redirect('social_media:profile', username=request.user.username)
     
+@login_required    
 def post(request, post_id):
     """Show a post from user"""
-    post = Post.objects.get(pk=post_id)
-    if post.owner != request.user:
-        raise Http404
+    post = get_object_or_404(Post, pk=post_id)
+    owner_username = post.owner.username
     if request.user.is_authenticated:
         username = request.user.username
     else:
@@ -63,12 +64,10 @@ def post(request, post_id):
     context = {
         'post': post,
         'username': username,
+        'owner_username': owner_username,
     }
-    if post is not None:
-        return render(request, 'social_media/post.html', context)
-    else:
-        raise Http404('Post does not exist')
-    
+    return render(request, 'social_media/post.html', context)
+
 def search(request):
     """Search for other profiles"""
     query = request.GET.get('search', '')
