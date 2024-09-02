@@ -10,9 +10,15 @@ def index(request):
     """Home page of site"""
     if request.user.is_authenticated:
         username = request.user.username
+        feed = Post.objects.exclude(owner=request.user).order_by('created_on').reverse()
     else:
         username = None
-    return render(request, 'social_media/index.html', {'username': username})
+        feed = None
+    context = {
+        'username': username,
+        'feed': feed,
+    }
+    return render(request, 'social_media/index.html', context)
 
 @login_required
 def profile(request, username):
@@ -80,8 +86,3 @@ def search(request):
         'results': results, 
     }
     return render(request, 'social_media/search.html', context)
-
-# def feed(request):
-#     """User feed"""
-#     feed = Post.objects.order_by('created_on')
-#     return render(request, 'social_media/profile.html', {'feed': feed})

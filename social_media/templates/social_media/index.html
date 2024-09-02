@@ -6,5 +6,14 @@
     <input name="search" type="text" placeholder="Search Profile...">
     <button name="submit">Search</button>
   </form>
-  <h2>home page - still wip</h2>
+
+  {% for post in feed %}
+    <ul>
+      <a href="{% url 'social_media:post' post.pk %}">
+        <img src="{{ post.image.url }}"/>
+      </a>
+    </ul>
+    {% empty %}
+      <p>Empty Feed</p>
+  {% endfor %}
 {% endblock content %}
