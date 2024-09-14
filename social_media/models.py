@@ -10,5 +10,13 @@ class Post(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        """Return a string representation of the model."""
         return self.image.url
+    
+class Comment(models.Model):
+    """A comment a user leaves on a post."""
+    comment = models.CharField(max_length=50)
+    created_on = models.DateTimeField(auto_now_add=True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.comment

@@ -4,8 +4,17 @@
   <h2><a href="{% url 'social_media:profile' username %}">User Profile</a></h2>
   <img src={{post.image.url}}/>
   <h1>{{post.caption}}</h1>
-  <h3>{{post.created_on}}</h3>
+  <p>{{post.created_on}}</p>
+
+  {% for c in comments %}
+    <li>{{c.comment}}</li>
+  {% empty %}
+    <p>no comments</p>
+  {% endfor %}
+
+  <a href="{% url 'social_media:new_comment' post.pk %}">Comment</a>
+
   {% if username == owner_username %}
     <a href="{% url 'social_media:delete_post' post.pk %}">Delete Post</a>
   {% endif %}
-  {% endblock content %}
+{% endblock content %}

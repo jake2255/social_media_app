@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from social_media.models import Post
+from social_media.models import Post, Comment
 from django.http import Http404
-from .forms import PostForm
+from .forms import PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from accounts.models import AccountUser
 from django.contrib.auth.models import User
@@ -62,6 +62,10 @@ def delete_post(request, post_id):
 def post(request, post_id):
     """Show a post from user"""
     post = get_object_or_404(Post, pk=post_id)
+    comments = Comment.objects.filter(post=post)
+    if not comments.exists():
+        comments = None
+
     owner_username = post.owner.username
     if request.user.is_authenticated:
         username = request.user.username
@@ -71,6 +75,7 @@ def post(request, post_id):
         'post': post,
         'username': username,
         'owner_username': owner_username,
+        'comments': comments
     }
     return render(request, 'social_media/post.html', context)
 
@@ -86,3 +91,18 @@ def search(request):
         'results': results, 
     }
     return render(request, 'social_media/search.html', context)
+
+def new_comment(request, post_id):
+    """Create a new comment on post"""
+    post = get_object_or_404(Post, pk=post_id)
+
+    if request.method != 'POST':
+        form = CommentForm()
+    else:
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.post = post
+            new_comment.save()
+            return redirect('social_media:post', post_id=post.pk)
+    return render(request, 'social_media/new_comment.html', {'form': form, 'post': post})
