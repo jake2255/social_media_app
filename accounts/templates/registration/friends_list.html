@@ -1,0 +1,9 @@
+{% extends 'social_media/base.html' %}
+
+{% block content %}
+  {% for friend in friends %}
+    <a href="{% url 'social_media:profile' friend.user.username %}">{{ friend.user.username }}</a>
+  {% empty %}
+    <p>No Friends</p>
+  {% endfor %}
+{% endblock content %}

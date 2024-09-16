@@ -2,4 +2,4 @@
 making a functional social media site, still a wip
 
 bugs:
-- none
+- cannot add friends yet

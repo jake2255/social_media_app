@@ -11,4 +11,6 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     # Account Settings
     path('settings/', views.settings, name='settings'),
+    # View friends list
+    path('<str:username>/friends/', views.friends_list, name='friends_list'),
 ]

@@ -7,7 +7,7 @@
   <p>{{post.created_on}}</p>
 
   {% for c in comments %}
-    <li>{{c.comment}}</li>
+    <li>{{c.owner.username}}: {{c.comment}}</li>
   {% empty %}
     <p>no comments</p>
   {% endfor %}

@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from .forms import AccountUserForm
-from .models import AccountUser
+from .models import AccountUser, User
+from django.contrib.auth.decorators import login_required
 
 def register(request):
     """Register new user"""
@@ -21,6 +22,7 @@ def register(request):
     # Display blank/invalid form
     return render(request, 'registration/register.html', {'form': form})
 
+@login_required
 def settings(request):
     """Edit account settings"""
     account = get_object_or_404(AccountUser, user=request.user)
@@ -34,3 +36,11 @@ def settings(request):
             return redirect('social_media:profile', username=request.user.username)
         
     return render(request, 'registration/settings.html', {'form': form})
+
+@login_required
+def friends_list(request, username):
+    """Show friends list"""
+    profile_user = get_object_or_404(User, username=username)
+    profile_account = get_object_or_404(AccountUser, user=profile_user)
+    friends = profile_account.friends.all()
+    return render(request, 'registration/friends_list.html', {'friends': friends})

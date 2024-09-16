@@ -23,13 +23,16 @@ def index(request):
 @login_required
 def profile(request, username):
     """Show user profile"""
-    user_name = get_object_or_404(User, username=username)
-    posts = Post.objects.filter(owner=user_name).order_by('created_on')
-    info = get_object_or_404(AccountUser, user=user_name)
+    profile_user = get_object_or_404(User, username=username)
+    profile_account = get_object_or_404(AccountUser, user=profile_user)
+    posts = Post.objects.filter(owner=profile_user).order_by('created_on')
+    info = get_object_or_404(AccountUser, user=profile_user)
+    friends = profile_account.friends.all()
     context = {
-        'user_name': user_name,
+        'profile_user': profile_user,
         'posts': posts,
         'info': info,
+        'friends': friends,
     }
     if posts is not None:
         return render(request, 'social_media/profile.html', context)
@@ -92,9 +95,11 @@ def search(request):
     }
     return render(request, 'social_media/search.html', context)
 
+@login_required  
 def new_comment(request, post_id):
     """Create a new comment on post"""
     post = get_object_or_404(Post, pk=post_id)
+    owner = request.user
 
     if request.method != 'POST':
         form = CommentForm()
@@ -103,6 +108,11 @@ def new_comment(request, post_id):
         if form.is_valid():
             new_comment = form.save(commit=False)
             new_comment.post = post
+            new_comment.owner = owner
             new_comment.save()
             return redirect('social_media:post', post_id=post.pk)
-    return render(request, 'social_media/new_comment.html', {'form': form, 'post': post})
+    context = {
+        'form': form,
+        'post': post,
+    }
+    return render(request, 'social_media/new_comment.html', context)
