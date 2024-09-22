@@ -1,9 +1,9 @@
 from django import forms
-from .models import AccountUser
+from .models import Profile
 
-class AccountUserForm(forms.ModelForm):
-    """Account user info"""
+class ProfileForm(forms.ModelForm):
+    """Profile form"""
     class Meta:
-        model = AccountUser
+        model = Profile
         fields = ['bio', 'profile_pic']
         labels = {'bio': 'Account Bio', 'profile_pic': 'Account Picture'}

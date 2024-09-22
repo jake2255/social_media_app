@@ -3,7 +3,7 @@ from social_media.models import Post, Comment
 from django.http import Http404
 from .forms import PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
-from accounts.models import AccountUser
+from accounts.models import Profile
 from django.contrib.auth.models import User
 
 def index(request):
@@ -23,21 +23,17 @@ def index(request):
 @login_required
 def profile(request, username):
     """Show user profile"""
-    profile_user = get_object_or_404(User, username=username)
-    profile_account = get_object_or_404(AccountUser, user=profile_user)
-    posts = Post.objects.filter(owner=profile_user).order_by('created_on')
-    info = get_object_or_404(AccountUser, user=profile_user)
-    friends = profile_account.friends.all()
+    user = get_object_or_404(User, username=username)
+    profile = get_object_or_404(Profile, owner=user)
+    posts = Post.objects.filter(owner=user).order_by('created_on')
+    friends = profile.friends.all()
     context = {
-        'profile_user': profile_user,
+        'user': user,
         'posts': posts,
-        'info': info,
+        'profile': profile,
         'friends': friends,
     }
-    if posts is not None:
-        return render(request, 'social_media/profile.html', context)
-    else:
-        raise Http404('User profile does not exist')
+    return render(request, 'social_media/profile.html', context)
     
 @login_required
 def new_post(request):
@@ -86,9 +82,9 @@ def search(request):
     """Search for other profiles"""
     query = request.GET.get('search', '')
     if query:
-        results = AccountUser.objects.filter(user__username__icontains=query)
+        results = Profile.objects.filter(owner__username__icontains=query)
     else:
-        results = AccountUser.objects.none()
+        results = Profile.objects.none()
     context = {
         'query': query,
         'results': results, 

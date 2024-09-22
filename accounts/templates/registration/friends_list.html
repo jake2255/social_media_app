@@ -2,7 +2,7 @@
 
 {% block content %}
   {% for friend in friends %}
-    <a href="{% url 'social_media:profile' friend.user.username %}">{{ friend.user.username }}</a>
+    <a href="{% url 'social_media:profile' friend.owner.username %}">{{ friend.owner.username }}</a>
   {% empty %}
     <p>No Friends</p>
   {% endfor %}

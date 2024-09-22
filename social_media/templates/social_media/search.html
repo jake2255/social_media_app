@@ -5,7 +5,7 @@
   {% if results %}
     <ul>
       {% for user in results %}
-        <li><a href="{% url 'social_media:profile' user.user.username %}">{{ user.user.username }}</a></li>
+        <li><a href="{% url 'social_media:profile' user.owner.username %}">{{ user.owner.username }}</a></li>
       {% endfor %}
     </ul>
   {% else %}

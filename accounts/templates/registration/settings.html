@@ -1,7 +1,7 @@
 {% extends 'social_media/base.html' %}
 
 {% block content %}
-  <h2>Account Settings:</h2>
+  <h2>Profile Settings:</h2>
   <form action="{% url 'accounts:settings' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_div }}
