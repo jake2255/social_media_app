@@ -1,0 +1,9 @@
+{% extends 'social_media/base.html' %}
+
+{% block content %}
+  {% for request in friend_requests %}
+    <p>{{ request.sender.username }}</p>
+  {% empty %}
+    <p>No Friend Requests</p>
+  {% endfor %}
+{% endblock content %}

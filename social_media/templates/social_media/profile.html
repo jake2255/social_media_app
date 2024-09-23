@@ -7,7 +7,7 @@
       <a href="{% url 'accounts:settings' %}">Account Settings</a>
       <a href="{% url 'accounts:friends_list' user.username %}">Friends</a>
     {% else %}
-      <p>Send friend request - to implement</p>
+      <a href="{% url 'accounts:send_friend_request' request.user.username user.username %}">Send Friend Request</a>
     {% endif %}
   </h2>
 

@@ -11,3 +11,15 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.owner.username
+    
+class FriendRequest(models.Model):
+    """Friend requests"""
+    STATUS_CHOICES = (
+        (1, 'Pending'),
+        (2, 'Accepted'),
+        (3, 'Rejected'),
+    )
+
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="request_sender")
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="request_receiver")
+    status = models.IntegerField(choices=STATUS_CHOICES, default=1)

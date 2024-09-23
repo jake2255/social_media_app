@@ -1,6 +1,8 @@
 {% extends 'social_media/base.html' %}
 
 {% block content %}
+  <a href="{% url 'accounts:view_friend_requests' %}">Pending Friend Requests</a>
+
   {% for friend in friends %}
     <a href="{% url 'social_media:profile' friend.owner.username %}">{{ friend.owner.username }}</a>
   {% empty %}

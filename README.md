@@ -2,4 +2,4 @@
 making a functional social media site, still a wip
 
 bugs:
-- cannot add friends yet
+- cannot accept/decline friend requests yet
