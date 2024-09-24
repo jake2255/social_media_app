@@ -17,4 +17,6 @@ urlpatterns = [
     path('friend_requests/', views.view_friend_requests, name='view_friend_requests'),
     # Send friend request
     path('send_friend_request/<str:sender_username>/<str:receiver_username>/', views.send_friend_request, name='send_friend_request'),
+    # Process friend request
+    path('friend_requests/<int:request_id>/<str:action>/', views.process_friend_request, name='process_friend_request'),
 ]

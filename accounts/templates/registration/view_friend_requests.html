@@ -2,7 +2,15 @@
 
 {% block content %}
   {% for request in friend_requests %}
-    <p>{{ request.sender.username }}</p>
+    <p>Friend Request from {{ request.sender.username }}</p>
+    <form action="{% url 'accounts:process_friend_request' request.id 'accept' %}" method="POST" style="display:inline;">
+      {% csrf_token %}
+      <button type="submit">Accept</button>
+    </form>
+    <form action="{% url 'accounts:process_friend_request' request.id 'reject' %}" method="POST" style="display:inline;">
+      {% csrf_token %}
+      <button type="submit">Reject</button>
+    </form>
   {% empty %}
     <p>No Friend Requests</p>
   {% endfor %}

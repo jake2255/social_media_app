@@ -4,7 +4,9 @@
   <a href="{% url 'accounts:view_friend_requests' %}">Pending Friend Requests</a>
 
   {% for friend in friends %}
-    <a href="{% url 'social_media:profile' friend.owner.username %}">{{ friend.owner.username }}</a>
+    <div>
+      <a href="{% url 'social_media:profile' friend.owner.username %}">{{ friend.owner.username }}</a>
+    </div>
   {% empty %}
     <p>No Friends</p>
   {% endfor %}

@@ -1,5 +1,6 @@
 # social media app
-making a functional social media site, still a wip
+Social Media Site - Name tbd
 
-bugs:
-- cannot accept/decline friend requests yet
+fix:
+- limit friend request to one per user
+- UI

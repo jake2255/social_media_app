@@ -43,7 +43,7 @@ def friends_list(request, username):
 @login_required
 def view_friend_requests(request):
     """View pending friend requests"""
-    friend_requests = FriendRequest.objects.filter(receiver=request.user)
+    friend_requests = FriendRequest.objects.filter(receiver=request.user, status=1)
     return render(request, 'registration/view_friend_requests.html', {'friend_requests': friend_requests})
 
 def send_friend_request(request, sender_username, receiver_username):
@@ -52,3 +52,22 @@ def send_friend_request(request, sender_username, receiver_username):
     rec_user = get_object_or_404(User, username=receiver_username)
     friend_req = FriendRequest.objects.create(sender = send_user, receiver = rec_user)
     return redirect('social_media:profile', username=receiver_username)
+
+def process_friend_request(request, request_id, action):
+    """Accept or reject friend request"""
+    friend_request = get_object_or_404(FriendRequest, id=request_id)
+
+    if action == 'accept':
+        friend_request.status = 2
+        friend_request.save()
+        
+        sender = Profile.objects.get(owner=friend_request.sender)
+        receiver = Profile.objects.get(owner=friend_request.receiver)
+        sender.friends.add(receiver)
+        receiver.friends.add(sender)
+
+    elif action == 'reject':
+        friend_request.status = 3
+        friend_request.save()
+
+    return redirect('accounts:view_friend_requests')
