@@ -1,11 +1,49 @@
-<h1>
-  <a href="{% url 'social_media:index' %}">Home Page</a>
-  {% if user.is_authenticated %}
-    Hello, {{ user.username }}!
-  {% else %}
-    <a href="{% url 'accounts:register' %}">Register</a>
-    <a href="{% url 'accounts:login' %}">Log in</a>
-  {% endif %}
-</h1>
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SM</title>
+  <link rel="stylesheet" href="{% static 'social_media/styles.css' %}">
 
-{% block content %}{% endblock content %}
+  {% load django_bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+</head>
+<body>
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4 border">
+    <div class="container-fluid">
+      <div class="d-flex align-items-left">
+        <a class="navbar-brand" href="{% url 'social_media:index' %}">Home</a>
+        {% if user.is_authenticated %}
+          <a class="navbar-brand" href="{% url 'social_media:profile' user.username %}">Profile</a>
+        {% endif %}    
+      </div>
+      {% if user.is_authenticated %}
+        <div>
+          <form action="{% url 'social_media:search' %}" method="get">
+            <input name="search" type="text" placeholder="Search Profile...">
+            <button name="submit">Search</button>
+          </form>
+        </div>
+      {% else %}
+        <div class="ml-auto">
+          <a class="navbar-brand" href="{% url 'accounts:login' %}">Log In</a>
+          <a class="navbar-brand" href="{% url 'accounts:register' %}">Register</a>
+        </div>  
+      {% endif %}
+    </div>
+  </nav>
+
+  <main class="container">
+    <!-- <div class="pb-2 mb-2 border-bottom text-center">
+      {% block page_header %}{% endblock page_header %}
+    </div> -->
+    <div>
+      {% block content %}{% endblock content %}
+    </div>
+  </main>
+</body>
+</html>
+

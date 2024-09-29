@@ -1,19 +1,34 @@
 {% extends 'social_media/base.html' %}
 
 {% block content %}
-  <h2><a href="{% url 'social_media:profile' username %}">User Profile</a></h2>
-  <form action="{% url 'social_media:search' %}" method="get">
-    <input name="search" type="text" placeholder="Search Profile...">
-    <button name="submit">Search</button>
-  </form>
-
-  {% for post in feed %}
-    <ul>
-      <a href="{% url 'social_media:post' post.pk %}">
-        <img src="{{ post.image.url }}"/>
-      </a>
-    </ul>
-    {% empty %}
-      <p>Empty Feed</p>
-  {% endfor %}
+  {% if user.is_authenticated %}
+    <div class="container mt-4">
+      {% for post in feed %}
+        <div class="row justify-content-center mb-4">
+          <div class="col-md-7">
+            <div class="card text-center">
+              <div class="card-body">
+                <a href="{% url 'social_media:post' post.pk %}">
+                  <img src="{{ post.image.url }}" class="img-fluid card-img-top" alt="Post Image"/>
+                </a>
+                <p class="mt-2">{{ post.caption }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <p>No posts in feed.</p>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="p-3 mb-4 bg-light border rounded-3">
+      <div class="container-fluid py-4">
+        <h1 class="display-3">"site name here - tbd"</h1>
+        <p class="lead">
+          Create your own account to connect with friends, share and view pictures, and comment on posts!
+        </p>
+        <a class="btn btn-primary btn-lg mt-1" href="{% url 'accounts:register' %}">Register &raquo;</a>
+      </div>
+    </div>
+  {% endif %}
 {% endblock content %}
