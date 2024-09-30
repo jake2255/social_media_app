@@ -1,14 +1,22 @@
 {% extends 'social_media/base.html' %}
 
+
 {% block content %}
-  <h2>Search Results for "{{ query }}"</h2>
-  {% if results %}
-    <ul>
-      {% for user in results %}
-        <li><a href="{% url 'social_media:profile' user.owner.username %}">{{ user.owner.username }}</a></li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>No profiles found matching "{{ query }}"</p>
-  {% endif %}
+  <div class="container mt-4">
+    <h2 class="text-center">Search Results for "{{ query }}"</h2>
+
+    {% if results %}
+      <ul class="list-group list-group-flush w-50 mx-auto mt-3">
+        {% for user in results %}
+          <li class="list-group-item text-center">
+            <a href="{% url 'social_media:profile' user.owner.username %}" class="text-decoration-none text-muted">
+              {{ user.owner.username }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="text-center text-muted mt-3">No profiles found matching "{{ query }}"</p>
+    {% endif %}
+  </div>
 {% endblock content %}

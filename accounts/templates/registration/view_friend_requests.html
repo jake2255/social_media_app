@@ -1,17 +1,26 @@
 {% extends 'social_media/base.html' %}
 
 {% block content %}
-  {% for request in friend_requests %}
-    <p>Friend Request from {{ request.sender.username }}</p>
-    <form action="{% url 'accounts:process_friend_request' request.id 'accept' %}" method="POST" style="display:inline;">
-      {% csrf_token %}
-      <button type="submit">Accept</button>
-    </form>
-    <form action="{% url 'accounts:process_friend_request' request.id 'reject' %}" method="POST" style="display:inline;">
-      {% csrf_token %}
-      <button type="submit">Reject</button>
-    </form>
-  {% empty %}
+  <h2>Friend Requests</h2>
+  {% if friend_requests %}
+    <div class="list-group">
+      {% for request in friend_requests %}
+        <div class="list-group-item d-flex justify-content-between align-items-center">
+          <span>Friend Request from {{ request.sender.username }}</span>
+          <div>
+            <form action="{% url 'accounts:process_friend_request' request.id 'accept' %}" method="POST" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-success btn-sm">Accept</button>
+            </form>
+            <form action="{% url 'accounts:process_friend_request' request.id 'reject' %}" method="POST" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
     <p>No Friend Requests</p>
-  {% endfor %}
+  {% endif %}
 {% endblock content %}

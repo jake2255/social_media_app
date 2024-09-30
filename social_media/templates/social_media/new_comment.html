@@ -1,10 +1,14 @@
 {% extends 'social_media/base.html' %}
 
 {% block content %}
-  <h2>New comment:</h2>
-  <form action="{% url 'social_media:new_comment' post.pk %}" method="post">
-    {% csrf_token %}
-    {{ form.as_div }}
-    <button name="submit">Comment</button>
-  </form>
+  <div class="container mt-4">
+    <h2 class="text-center mb-4">New Comment</h2>
+    <form action="{% url 'social_media:new_comment' post.pk %}" method="post" class="w-50 mx-auto">
+      {% csrf_token %}
+      <div class="mb-3">
+        {{ form.as_p }}
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Submit Comment</button>
+    </form>
+  </div>
 {% endblock content %}

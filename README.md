@@ -11,7 +11,6 @@ Features:
 - Search: Easily search and view other user profiles. 
 
 Issues:
-- clean up UI of login, register, post, settings, and friends pages
 - when viewing another profile, profile button on nav bar doesnt direct back to logged in profile
 - photo quality is not the best when viewing on feed
 - can send multiple friend requests to same person, limit friend request to one per user

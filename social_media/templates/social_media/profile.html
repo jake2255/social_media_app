@@ -19,7 +19,7 @@
         <button class="btn btn-info me-2" name="submit">Log out</button>
       </form>
     {% else %}
-      <a href="{% url 'accounts:send_friend_request' request.user.username user.username %}">Send Friend Request</a>
+      <a href="{% url 'accounts:send_friend_request' request.user.username user.username %}" class="btn btn-info me-2">Send Friend Request</a>
     {% endif %}
   </div>
   
@@ -32,11 +32,4 @@
       <p>Empty Profile</p>
     {% endfor %}
   </div>
-  
-
-  {% if user.is_authenticated %}
-  <hr/>
-
-  {% endif %}
-
 {% endblock content %} 

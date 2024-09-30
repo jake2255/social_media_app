@@ -1,20 +1,36 @@
 {% extends 'social_media/base.html' %}
 
 {% block content %}
-  <h2><a href="{% url 'social_media:profile' username %}">User Profile</a></h2>
-  <img src={{post.image.url}}/>
-  <h1>{{post.caption}}</h1>
-  <p>{{post.created_on}}</p>
+  <div class="container">
+    <div class="d-flex flex-column align-items-center mb-4">
+      <img src="{{ post.image.url }}" class="img-fluid border rounded shadow mb-3" style="width: 500px; height: auto;" />
+      <h1 class="text-center">{{ post.caption }}</h1>
+      <p class="text-muted">{{ post.created_on|date:"F d, Y" }} - {{ post.created_on|time:"H:i" }}</p>
+    </div>
 
-  {% for c in comments %}
-    <li>{{c.owner.username}}: {{c.comment}}</li>
-  {% empty %}
-    <p>no comments</p>
-  {% endfor %}
+    <div class="card w-75 mx-auto mb-4">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Comments</h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        {% for c in comments %}
+          <li class="list-group-item">
+            <strong>{{ c.owner.username }}:</strong> {{ c.comment }}
+          </li>
+        {% empty %}
+          <li class="list-group-item text-center">No comments yet</li>
+        {% endfor %}
+      </ul>
+    </div>
 
-  <a href="{% url 'social_media:new_comment' post.pk %}">Comment</a>
+    <div class="text-center">
+      <a href="{% url 'social_media:new_comment' post.pk %}" class="btn btn-primary mb-3">Add a Comment</a>
+    </div>
 
-  {% if username == owner_username %}
-    <a href="{% url 'social_media:delete_post' post.pk %}">Delete Post</a>
-  {% endif %}
+    {% if username == owner_username %}
+      <div class="text-center">
+        <a href="{% url 'social_media:delete_post' post.pk %}" class="btn btn-danger">Delete Post</a>
+      </div>
+    {% endif %}
+  </div>
 {% endblock content %}

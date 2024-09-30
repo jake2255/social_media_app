@@ -1,10 +1,16 @@
 {% extends 'social_media/base.html' %}
 
 {% block content %}
-  <h2>Profile Settings:</h2>
-  <form action="{% url 'accounts:settings' %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_div }}
-    <button name="submit">Save Changes</button>
-  </form>
+  <div class="container mt-4">
+    <h2 class="text-center mb-4">Profile Settings</h2>
+    <form action="{% url 'accounts:settings' %}" method="post" enctype="multipart/form-data" class="w-75 mx-auto">
+      {% csrf_token %}
+      <div class="mb-3">
+        {{ form.as_p }}
+      </div>
+      <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-info">Save Changes</button>
+      </div>
+    </form>
+  </div>
 {% endblock content %}

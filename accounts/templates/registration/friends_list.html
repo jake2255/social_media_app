@@ -1,13 +1,25 @@
 {% extends 'social_media/base.html' %}
 
 {% block content %}
-  <a href="{% url 'accounts:view_friend_requests' %}">Pending Friend Requests</a>
-
-  {% for friend in friends %}
-    <div>
-      <a href="{% url 'social_media:profile' friend.owner.username %}">{{ friend.owner.username }}</a>
+  <div class="container">
+    <div class="text-center mb-4">
+      <a href="{% url 'accounts:view_friend_requests' %}" class="btn btn-primary">Pending Friend Requests</a>
     </div>
-  {% empty %}
-    <p>No Friends</p>
-  {% endfor %}
+    <div class="card w-50 mx-auto">
+      <div class="card-header text-center">
+        <h5>Friends List</h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        {% for friend in friends %}
+          <li class="list-group-item text-center">
+            <a href="{% url 'social_media:profile' friend.owner.username %}" class="text-decoration-none text-muted">
+              {{ friend.owner.username }}
+            </a>
+          </li>
+        {% empty %}
+          <li class="list-group-item text-center">No Friends</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
 {% endblock content %}
